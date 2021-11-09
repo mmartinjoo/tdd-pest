@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    ports:
+        - 8000:8000
+    volumes:
+      - ./:/usr/local/src
+    environment:
+      - APP_ENV=local
+      - APP_KEY=base64:7t3iJGYKu1jqjeEQixGEL8mXwCr6XgVRmd6ryRII3Jo=
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=app
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - LOG_CHANNEL=stack
+      - LOG_LEVEL=debug
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.27
+    platform: linux/x86_64
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+      - ./storage/mysqldata:/var/lib/mysql
+    ports:
+      - 33060:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
