@@ -30,9 +30,14 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(StoreCategoryRequest $request, Category $category)
     {
-        //
+        $category->fill($request->validated());
+        $category->save();
+
+        return response([
+            'data' => new CategoryResource($category->fresh())
+        ], Response::HTTP_OK);
     }
 
     public function destroy(Category $category)
