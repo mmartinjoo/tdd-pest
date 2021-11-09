@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
@@ -36,6 +37,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

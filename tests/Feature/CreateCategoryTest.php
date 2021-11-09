@@ -34,11 +34,13 @@ it('should create a category', function () {
         ->assertStatus(Response::HTTP_CREATED)
         ->json('data');
 
-    $category = getJson(route('categories.show', ['category' => $response['id']]))->json('data');
-    expect($category)->toMatchArray([
-        'id' => $response['id'],
-        'name' => 'Books',
-        'description' => 'Category for books',
-        'productCount' => 0,
-    ]);
+        $category = getJson(
+            route('categories.show', ['category' => $response['id']])
+        )->json('data');
+
+        expect($category)
+            ->id->toBe($response['id'])
+            ->name->toBe('Books')
+            ->description->toBe('Category for books')
+            ->productCount->toBe(0);
 });
