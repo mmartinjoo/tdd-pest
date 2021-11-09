@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -18,12 +19,14 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request)
     {
-
+        return response([
+            'data' => new CategoryResource(Category::create($request->validated()))
+        ], Response::HTTP_CREATED);
     }
 
     public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
     public function update(UpdateCategoryRequest $request, Category $category)
