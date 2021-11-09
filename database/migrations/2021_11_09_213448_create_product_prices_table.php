@@ -12,8 +12,8 @@ class CreateProductPricesTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->float('price')->nullable(false);
-            $table->date('from_date')->nullable(false);
-            $table->date('to_date')->nullable(false);
+            $table->dateTime('from_date')->nullable(false);
+            $table->dateTime('to_date')->nullable(false);
             $table->timestamps();
         });
     }

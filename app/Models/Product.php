@@ -9,6 +9,9 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['category_id', 'name', 'description'];
+    protected $appends = ['current_price'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -17,5 +20,13 @@ class Product extends Model
     public function prices()
     {
         return $this->hasMany(ProductPrice::class);
+    }
+
+    public function getCurrentPriceAttribute(): ?float
+    {
+        return $this->prices
+            ->where('from_date', '<=', now())
+            ->where('to_date', '>=', now())
+            ->first()?->price;
     }
 }

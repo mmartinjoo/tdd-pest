@@ -4,5 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('v1/categories', CategoryController::class);
-Route::get('v1/categories/{category}/products', [CategoryProductController::class, 'index'])->name('category/products.index');
+$actions = ['store', 'index', 'show', 'update', 'destroy'];
+
+Route::resource('v1/categories', CategoryController::class)->only($actions);
+Route::resource('v1/categories/{category}/products', CategoryProductController::class)->only($actions);
