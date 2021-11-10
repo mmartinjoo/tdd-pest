@@ -15,6 +15,6 @@ it('should return all products for a category', function () {
         ->has(Product::factory()->count(10))
         ->create();
 
-    $products = getJson(route('products.index', ['category' => $category->id]))->json('data');
+    $products = getJson(route('category/products.index', ['category' => $category->id]))->json('data');
     expect($products)->toHaveCount(3);
 });
