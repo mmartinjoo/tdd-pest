@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\ProductPrice;
 use Illuminate\Support\Facades\DB;
 
-class CreateProduct
+class UpsertProduct
 {
     public function handle(
         Category $category,

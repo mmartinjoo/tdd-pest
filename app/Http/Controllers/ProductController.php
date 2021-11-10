@@ -6,12 +6,12 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\CreateProduct;
+use App\Services\UpsertProduct;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    public function __construct(private readonly CreateProduct $createProduct)
+    public function __construct(private readonly UpsertProduct $createProduct)
     {
     }
 
