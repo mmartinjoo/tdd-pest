@@ -10,7 +10,6 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['category_id', 'name', 'description'];
-    protected $appends = ['current_price'];
 
     public function category()
     {
