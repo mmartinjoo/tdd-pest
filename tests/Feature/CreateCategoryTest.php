@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\postJson;
 
+
 it('should return 422 if name is missing', function ($name) {
     postJson(route('categories.store'), [
         'name' => $name,
