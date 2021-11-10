@@ -14,13 +14,19 @@ class CreateProduct
         string $name,
         array $prices,
         ?string $description,
+        ?int $id = null
     ): Product {
-        return DB::transaction(function () use ($category, $name, $description, $prices) {
-            $product = Product::create([
-                'category_id' => $category->id,
-                'description' => $description,
-                'name' => $name,
-            ]);
+        return DB::transaction(function () use ($category, $name, $description, $prices, $id) {
+            $product = Product::updateOrCreate(
+                [
+                    'id' => $id,
+                ],
+                [
+                    'category_id' => $category->id,
+                    'description' => $description,
+                    'name' => $name,
+                ]
+            );
 
             $productPrices = collect($prices)
                 ->map(fn (array $priceData) => new ProductPrice([
@@ -29,6 +35,7 @@ class CreateProduct
                     'price' => $priceData['price'],
                 ]));
 
+            $product->prices()->delete();
             $product->prices()->saveMany($productPrices);
             return $product;
         });

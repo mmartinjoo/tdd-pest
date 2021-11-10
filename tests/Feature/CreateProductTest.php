@@ -9,7 +9,7 @@ use function Pest\Laravel\postJson;
 it('should create a product', function () {
     $category = Category::factory()->create();
 
-    $product = postJson(route('products.store', ['category' => $category]), [
+    $product = postJson(route('products.store'), [
         'categoryId' => $category->id,
         'name' => 'Microservices with Laravel',
         'description' => 'The ultimate guide to build microservices with Laravel',
