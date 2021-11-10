@@ -10,10 +10,17 @@ class CreateProductPricesTable extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
+
             $table->float('price')->nullable(false);
             $table->dateTime('from_date')->nullable(false);
             $table->dateTime('to_date')->nullable(false);
+
+            $table->foreignId('product_id')
+                ->index()
+                ->references('id')
+                ->on('products')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

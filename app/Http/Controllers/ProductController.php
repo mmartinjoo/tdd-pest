@@ -29,21 +29,25 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $product = $this->createProduct->handle(
-            Category::find($request->getCategoryId()),
-            $request->getName(),
-            $request->getPrices(),
-            $request->getDescription()
-        );
-
-        $product->load('category');
-
         return response([
-            'data' => new ProductResource($product)
+            'data' => new ProductResource($this->upsert($request, new Product()))
         ], Response::HTTP_CREATED);
     }
 
     public function update(StoreProductRequest $request, Product $product)
+    {
+        return response([
+            'data' => new ProductResource($this->upsert($request, $product))
+        ], Response::HTTP_OK);
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        return response([], Response::HTTP_NO_CONTENT);
+    }
+
+    private function upsert(StoreProductRequest $request, Product $product): Product
     {
         $product = $this->createProduct->handle(
             Category::find($request->getCategoryId()),
@@ -54,14 +58,6 @@ class ProductController extends Controller
         );
 
         $product->load('category');
-
-        return response([
-            'data' => new ProductResource($product)
-        ], Response::HTTP_OK);
-    }
-
-    public function destroy(Product $product)
-    {
-        //
+        return $product;
     }
 }

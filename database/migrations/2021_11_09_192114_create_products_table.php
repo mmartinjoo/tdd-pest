@@ -10,10 +10,17 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id')->nullable(true);
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('SET NULL');
+
             $table->string('name')->nullable(false)->unique();
             $table->longText('description')->nullable(true);
+
+            $table->foreignId('category_id')
+                ->index()
+                ->nullable(true)
+                ->references('id')
+                ->on('categories')
+                ->onDelete('SET NULL');
+
             $table->timestamps();
         });
     }
