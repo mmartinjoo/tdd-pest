@@ -27,18 +27,20 @@ it('should return 422 if name is not unique', function () {
 
 it('should create a category', function () {
     $response = postJson(
-        route('categories.store'), [
+        route('categories.store'),
+        [
             'name' => 'Books',
             'description' => 'Category for books',
-        ])
+        ]
+    )
         ->assertStatus(Response::HTTP_CREATED)
         ->json('data');
 
-        $category = getJson(
-            route('categories.show', ['category' => $response['id']])
-        )->json('data');
+    $category = getJson(
+        route('categories.show', ['category' => $response['id']])
+    )->json('data');
 
-        expect($category)
+    expect($category)
             ->id->toBe($response['id'])
             ->name->toBe('Books')
             ->description->toBe('Category for books')

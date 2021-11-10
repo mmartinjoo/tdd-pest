@@ -19,7 +19,8 @@ it('should update a category', function () {
         [
             'name' => 'Books updated',
             'description' => 'New description',
-        ])
+        ]
+    )
         ->assertStatus(Response::HTTP_OK);
 
     $category = getJson(route('categories.show', ['category' => $category->id]))->json('data');
@@ -39,7 +40,8 @@ it('should ignore the old name from unique validation', function () {
         [
             'name' => 'Books',
             'description' => 'New description',
-        ])
+        ]
+    )
         ->assertStatus(Response::HTTP_OK);
 
     $category = getJson(route('categories.show', ['category' => $category->id]))->json('data');

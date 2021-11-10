@@ -7,7 +7,7 @@ use App\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
 use function Pest\Laravel\deleteJson;
 
-it('should delete a category', function() {
+it('should delete a category', function () {
     $category = Category::factory()->create();
 
     deleteJson(route('categories.destroy', ['category' => $category->id]))
@@ -16,7 +16,7 @@ it('should delete a category', function() {
     $this->assertDatabaseCount('categories', 0);
 });
 
-it('should set deleted category products category id to NULL', function() {
+it('should set deleted category products category id to NULL', function () {
     $category = Category::factory()
         ->has(Product::factory()->count(3))
         ->create();
